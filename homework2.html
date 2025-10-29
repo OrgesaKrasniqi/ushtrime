@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Filter</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <h1>Filter</h1>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="form-group">
+                <select id="users-select" class="custom-select">
+                    <option value="-1" selected>Choose age</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-5 offset-sm-1">
+                <h3>Filter by age</h3>
+                <div id="res"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+const usersSelect = document.getElementById('users-select');
+const res = document.getElementById('res');
+
+let users = [
+ {id: 1, name: "John", age: "20"},
+ {id: 2, name: "Sasha", age: "30"},
+ {id: 3, name: "Bill", age: "40"},
+ {id: 4, name: "Ashley", age: "20"},
+ {id: 5, name: "Rachel", age: "40"},
+ {id: 6, name: "Tom", age: "30"},
+ {id: 7, name: "Steve", age: "30"},
+ {id: 8, name: "Jim", age: "40"},
+ {id: 9, name: "Willy", age: "20"}
+];
+
+// 1) Put unique ages into the select
+function populateAges() {
+  const uniqueAges = Array.from(new Set(users.map(u => u.age))); // 
+  uniqueAges.sort((a, b) => Number(a) - Number(b)); // numeric order
+
+  uniqueAges.forEach(age => {
+    const opt = document.createElement('option');
+    opt.value = age;
+    opt.textContent = age;
+    usersSelect.appendChild(opt);
+  });
+}
+
+// 2) show matching users in #res
+function showUsersByAge(ageValue) {
+  res.innerHTML = ''; // clear previous
+
+  if (ageValue === '-1') {
+    // kur skena select kurgjo,programi na kthen pas
+    const p = document.createElement('p');
+    p.textContent = 'Please select an age.';
+    res.appendChild(p);
+    return;
+  }
+
+  const matched = users.filter(u => u.age === ageValue);
+
+  if (matched.length === 0) {
+    const p = document.createElement('p');
+    p.textContent = 'No users found for age ' + ageValue;
+    res.appendChild(p);
+    return;
+  }
+
+  const ul = document.createElement('ul');
+  ul.className = 'list-group';
+
+  matched.forEach(u => {
+    const li = document.createElement('li');
+    li.className = 'list-group-item';
+    li.textContent = u.name; // veq emri osht required per instructions
+    ul.appendChild(li);
+  });
+
+  res.appendChild(ul);
+}
+
+populateAges();
+showUsersByAge('-1'); // show initial message
+
+// for changes
+usersSelect.addEventListener('change', function() {
+  showUsersByAge(this.value);
+});
+</script>
+</body>
+</html>
