@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Work 1 — Tasks Completed</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous"/>
+    <style>
+      li { font-size: 22px; }
+      li:hover { cursor: pointer; }
+      .section { margin-bottom: 20px; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="mb-4 text-center">Work 1 — Solutions</h1>
+
+      <!--Task 1: demonstrates the problem with var--> 
+      <div class="section">
+        <h5>Original (var) — Task 1</h5>
+        <ul id="list-original" class="list-group">
+          <li class="list-group-item text-center">1</li>
+          <li class="list-group-item text-center">2</li>
+          <li class="list-group-item text-center">3</li>
+          <li class="list-group-item text-center">4</li>
+          <li class="list-group-item text-center">5</li>
+        </ul>
+        <p class="small text-muted">Clicking any item here will alert 5 (see debugger / reason: var is function-scoped).</p>
+      </div>
+
+       <!-- Task 2: using closures -->
+      <div class="section">
+        <h5>Task 2 — Closure (IIFE) — do not use let</h5>
+        <ul id="list-closure" class="list-group">
+          <li class="list-group-item text-center">1</li>
+          <li class="list-group-item text-center">2</li>
+          <li class="list-group-item text-center">3</li>
+          <li class="list-group-item text-center">4</li>
+          <li class="list-group-item text-center">5</li>
+        </ul>
+      </div>
+
+      <!-- Task 3: using let -->
+      <div class="section">
+        <h5>Task 3 — Using let</h5>
+        <ul id="list-let" class="list-group">
+          <li class="list-group-item text-center">1</li>
+          <li class="list-group-item text-center">2</li>
+          <li class="list-group-item text-center">3</li>
+          <li class="list-group-item text-center">4</li>
+          <li class="list-group-item text-center">5</li>
+        </ul>
+      </div>
+    </div>
+
+    <script>
+      // demonstrates the bug: var osht function-scoped kshtuqe i bohet 5 mas unazes
+      (function originalDemo() {
+        const list = document.getElementById("list-original");
+        const els = list.getElementsByTagName("li");
+        for (var i = 0, len = els.length; i < len; i++) {
+          els[i].onclick = function() {
+            // alerts 5 for any clicked item
+            alert(i);
+          };
+        }
+      })();
+
+      // Closure (IIFE) - capture the current index pa e perdor let
+      (function closureSolution() {
+        const list = document.getElementById("list-closure");
+        const els = list.getElementsByTagName("li");
+        for (var i = 0, len = els.length; i < len; i++) {
+          (function(index) {
+            els[index].onclick = function() {
+              // show the logical item number (1..5)
+              alert(index + 1);
+            };
+          })(i);
+        }
+      })();
+
+      // using let
+      (function letSolution() {
+        const list = document.getElementById("list-let");
+        const els = list.getElementsByTagName("li");
+        for (let j = 0, len = els.length; j < len; j++) {
+          els[j].onclick = function() {
+            alert(j + 1);
+          };
+        }
+      })();
+    </script>
+  </body>
+</html>
