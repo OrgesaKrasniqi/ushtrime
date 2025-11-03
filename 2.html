@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+ <head>
+    <title>JavaScript - regSearch.html</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">
+    <style>
+        .out span {color: yellowgreen; font-style: italic;}
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 id="out" class="out">Javascript is an excellent language.<br>We like to learn javascript.</h1>
+    <input id="btn" class="btn btn-primary" type="button" value="Click me">
+</div>
+<!-- 
+    change the text javascript in the paragraph to JAVASCRIPT.
+-->
+<script>
+  // When the button is clicked, replace all occurrences of "javascript"
+  // (case-insensitive) inside the heading with "JAVASCRIPT".
+  const btn = document.getElementById('btn');
+  const out = document.getElementById('out');
+
+  btn.addEventListener('click', function () {
+    out.innerHTML = out.innerHTML.replace(/javascript/gi, 'JAVASCRIPT');
+  });
+</script>
+
+
+</body>
+</html>
