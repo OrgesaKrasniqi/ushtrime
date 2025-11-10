@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Task 5 — Array Destructuring: Pick Favorite Fruits</title>
+</head>
+<body>
+  <h2>Task 5 — Array Destructuring: Pick Favorite Fruits</h2>
+  <p>Enter a list of fruits and find out your top picks!</p>
+
+  <input id="fruitsInput" placeholder="e.g. apple, banana, mango, kiwi, cherry" size="60">
+  <button id="showBtn">Show Favorites</button>
+
+  <p id="result"></p>
+
+  <script>
+    const showBtn = document.getElementById("showBtn");
+    const result = document.getElementById("result");
+
+    showBtn.addEventListener("click", () => {
+      const fruits = document.getElementById("fruitsInput").value
+        .split(",")
+        .map(f => f.trim())
+        .filter(f => f !== "");
+
+      if (fruits.length === 0) {
+        result.textContent = "Please enter at least one fruit.";
+        return;
+      }
+
+      const [first, second, ...others] = fruits;
+
+      if (!second) {
+        result.textContent = `Your favorite fruit is ${first}.`;
+      } else if (others.length === 0) {
+        result.textContent = `Your top 2 favorites are ${first} and ${second}.`;
+      } else {
+        result.textContent = `Your top 2 favorites are ${first} and ${second}. Other favorites: ${others.join(", ")}.`;
+      }
+    });
+  </script>
+</body>
+</html>
