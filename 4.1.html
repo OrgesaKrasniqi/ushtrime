@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Task 4 — Merge Multiple Arrays of Scores</title>
+</head>
+<body>
+  <h2>Task 4 — Merge Multiple Arrays of Scores</h2>
+  <p>Enter several groups of scores and show all combined + average score.</p>
+
+  <textarea id="group1" placeholder="Group 1: e.g. 10, 20, 30"></textarea><br><br>
+  <textarea id="group2" placeholder="Group 2: e.g. 25, 15, 40"></textarea><br><br>
+  <textarea id="group3" placeholder="Group 3 (optional): e.g. 5, 10, 20"></textarea><br><br>
+  
+  <button id="combineBtn">Combine & Calculate</button>
+  <p id="output"></p>
+
+  <script>
+    const combineBtn = document.getElementById("combineBtn");
+    const output = document.getElementById("output");
+
+    function parseScores(text) {
+      return text
+        .split(",")
+        .map(n => parseFloat(n))
+        .filter(n => !isNaN(n));
+    }
+
+    combineBtn.addEventListener("click", () => {
+      const group1 = parseScores(document.getElementById("group1").value);
+      const group2 = parseScores(document.getElementById("group2").value);
+      const group3 = parseScores(document.getElementById("group3").value);
+
+      const combined = [...group1, ...group2, ...group3];
+      if (combined.length === 0) {
+        output.textContent = "Please enter at least one valid score.";
+        return;
+      }
+
+      const avg = combined.reduce((a, b) => a + b, 0) / combined.length;
+      output.textContent = `Combined Scores: [${combined.join(", ")}]\nAverage: ${avg.toFixed(2)}`;
+    });
+  </script>
+</body>
+</html>
