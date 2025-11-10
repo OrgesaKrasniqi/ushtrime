@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Task 2 — Combine Lists Into One</title>
+</head>
+<body>
+  <h2>Task 2 — Combine Two Lists</h2>
+  <p>Enter two lists of words separated by commas and click "Combine".</p>
+
+  <textarea id="list1" placeholder="List 1: e.g. apple, banana, kiwi"></textarea>
+  <br><br>
+  <textarea id="list2" placeholder="List 2: e.g. orange, lemon, kiwi"></textarea>
+  <br><br>
+  <button id="combineBtn">Combine</button>
+
+  <p id="output"></p>
+
+  <script>
+    function combineLists(...lists) {
+      const combined = lists.flat();
+      const uniqueCombined = [...new Set(combined)];
+      return uniqueCombined;
+    }
+
+    document.getElementById("combineBtn").addEventListener("click", function() {
+      const list1 = document.getElementById("list1").value.trim();
+      const list2 = document.getElementById("list2").value.trim();
+      const output = document.getElementById("output");
+
+      if (!list1 && !list2) {
+        output.textContent = "Please enter at least one list.";
+        return;
+      }
+
+      const arr1 = list1 ? list1.split(",").map(w => w.trim()).filter(Boolean) : [];
+      const arr2 = list2 ? list2.split(",").map(w => w.trim()).filter(Boolean) : [];
+
+      const result = combineLists(arr1, arr2);
+
+      output.textContent = `Combined list: [ ${result.join(", ")} ]`;
+    });
+  </script>
+</body>
+</html>
